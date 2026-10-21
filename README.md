@@ -10,7 +10,7 @@ Local, read-only MCP server that reads Reddit's public RSS feeds. A stopgap unti
 
 ## Etiquette
 
-- One request at a time, at least 8 s apart, 10-minute cache, backs off on HTTP 429.
+- One request at a time, paced by Reddit's x-ratelimit-* headers (logged-out RSS is ~1 request per 60 s per IP), at least 8 s apart, 10-minute cache. Waits in-call up to 45 s including queue time (MCP clients time out at 60 s); beyond that it returns stale cache or fails with the time the next request is possible.
 - Logged out, descriptive User-Agent, nothing stored beyond the process.
 - Read-only. Never posts, votes or messages.
 
